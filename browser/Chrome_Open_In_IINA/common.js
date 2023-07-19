@@ -66,6 +66,8 @@ export function openInIINA(tabId, url, options = {}) {
             params.push("pip=1"); break;
         case "enqueue":
             params.push("enqueue=1"); break;
+        case "yt_fast":
+            params.push("mpv_ytdl-format=bestvideo[proto^=https]+bestaudio/best"); break;
     }
     if (options.newWindow) {
         params.push("new_window=1");

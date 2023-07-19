@@ -17,9 +17,21 @@ Object.keys(dict).forEach((item) => {
   });
 });
 
+chrome.contextMenus.create({
+  title: `Open in IINA with Youtube-fast`,
+  id: `openiniina_ytfast`,
+  contexts: ["link"],
+});
+
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (info.menuItemId.startsWith("openiniina")) {
     const key = info.menuItemId.split("_")[1];
+    if (key === "ytfast") {
+      openInIINA(tab.id, info["linkUrl"], {
+        mode: "yt_fast",
+      });
+      return;
+    }
     const url = info[dict[key]];
     if (url) {
       openInIINA(tab.id, url);
