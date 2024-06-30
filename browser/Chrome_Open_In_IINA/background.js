@@ -17,20 +17,33 @@ Object.keys(dict).forEach((item) => {
   });
 });
 
-chrome.contextMenus.create({
-  title: `Open in IINA with Youtube-fast`,
-  id: `openiniina_ytfast`,
-  contexts: ["link"],
+const dictYt = {
+  YT: "yt",
+  YT1440: "yt1440",
+  YT1080: "yt1080",
+};
+
+["page", "link"].forEach((context) => {
+  Object.keys(dictYt).forEach((item) => {
+    chrome.contextMenus.create({
+      title: `Open in IINA with ${item}`,
+      id: `openiniina_${dictYt[item]}_${context}`,
+      contexts: [context],
+    });
+  });
 });
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (info.menuItemId.startsWith("openiniina")) {
     const key = info.menuItemId.split("_")[1];
-    if (key === "ytfast") {
-      openInIINA(tab.id, info["linkUrl"], {
-        mode: "yt_fast",
-      });
-      return;
+    if (key.startsWith("yt")) {
+      var context = info.menuItemId.split("_")[2];
+      switch (context) {
+        case "link":
+          openInIINA(tab.id, info["linkUrl"], { mode: key }); return;
+        case "page":
+          openInIINA(tab.id, info["pageUrl"], { mode: key }); return;
+      }
     }
     const url = info[dict[key]];
     if (url) {

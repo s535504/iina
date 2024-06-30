@@ -66,8 +66,12 @@ export function openInIINA(tabId, url, options = {}) {
             params.push("pip=1"); break;
         case "enqueue":
             params.push("enqueue=1"); break;
-        case "yt_fast":
-            params.push("mpv_ytdl-format=bestvideo[proto^=https]+bestaudio/best"); break;
+        case "yt":
+            params.push("mpv_profile=yt"); break;
+        case "yt1440":
+            params.push("mpv_profile=1440"); break;
+        case "yt1080":
+            params.push("mpv_profile=1080"); break;
     }
     if (options.newWindow) {
         params.push("new_window=1");
